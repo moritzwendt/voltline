@@ -10,11 +10,14 @@
 		0296EC5ACAAFEE319204537B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED248AC44059CFA19CE751A9 /* IOKit.framework */; };
 		095683C74BA73774FAC1FA57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928F0B823A417E43B6B74722 /* Assets.xcassets */; };
 		32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */; };
+		4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */; };
 		472527C47FE23B093652FF91 /* BatteryHardwareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9484005BE89C785378FB92C /* BatteryHardwareService.swift */; };
 		7C5E31ED8E5AE682638F6B06 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F260F67FB9C1759F23596E0 /* AppModel.swift */; };
 		7D84925BECC0201CE27A223C /* VoltlineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8F6A4A85A2E3F544476F /* VoltlineStyle.swift */; };
 		889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */; };
 		930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3732C4FE01B65A7B05600C8 /* DashboardView.swift */; };
+		A2D08069B00FED95AAD9D5AB /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20E00B1A8229A2BFEAC7051 /* Charts.framework */; };
+		EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9D6D2F16BCC4864F58780 /* SampleData.swift */; };
 		EBC93D062B46B60079662357 /* AppShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,9 +25,12 @@
 		0A8D8F6A4A85A2E3F544476F /* VoltlineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineStyle.swift; sourceTree = "<group>"; };
 		1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellView.swift; sourceTree = "<group>"; };
 		1F260F67FB9C1759F23596E0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		2BA9D6D2F16BCC4864F58780 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		7DA4E211075A4AD61573F5CB /* Voltline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Voltline.entitlements; sourceTree = "<group>"; };
 		8E3759DCD2557BE6EE724A31 /* Voltline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Voltline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		928F0B823A417E43B6B74722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A20E00B1A8229A2BFEAC7051 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
+		ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryTimelineChart.swift; sourceTree = "<group>"; };
 		BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineApp.swift; sourceTree = "<group>"; };
 		C3732C4FE01B65A7B05600C8 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D9484005BE89C785378FB92C /* BatteryHardwareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHardwareService.swift; sourceTree = "<group>"; };
@@ -38,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0296EC5ACAAFEE319204537B /* IOKit.framework in Frameworks */,
+				A2D08069B00FED95AAD9D5AB /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */,
+				ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */,
 				C3732C4FE01B65A7B05600C8 /* DashboardView.swift */,
 			);
 			path = Views;
@@ -73,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				1F260F67FB9C1759F23596E0 /* AppModel.swift */,
+				2BA9D6D2F16BCC4864F58780 /* SampleData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,6 +120,7 @@
 		CFA90DD7B83BACDFAB5E0EA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A20E00B1A8229A2BFEAC7051 /* Charts.framework */,
 				ED248AC44059CFA19CE751A9 /* IOKit.framework */,
 			);
 			name = Frameworks;
@@ -200,7 +210,9 @@
 				EBC93D062B46B60079662357 /* AppShellView.swift in Sources */,
 				472527C47FE23B093652FF91 /* BatteryHardwareService.swift in Sources */,
 				889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */,
+				4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */,
 				930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */,
+				EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */,
 				32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */,
 				7D84925BECC0201CE27A223C /* VoltlineStyle.swift in Sources */,
 			);

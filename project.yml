@@ -21,6 +21,7 @@ targets:
       - Voltline
     dependencies:
       - sdk: IOKit.framework
+      - sdk: Charts.framework
     settings:
       base:
         PRODUCT_NAME: Voltline

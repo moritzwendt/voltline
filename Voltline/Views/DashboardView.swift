@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @Environment(AppModel.self) private var model
+    private let previewSamples = SampleData.workday()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -17,13 +18,34 @@ struct DashboardView: View {
             }
 
             if let snapshot = model.currentSnapshot {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(snapshot.percentage.formatted(.number.precision(.fractionLength(0))) + "%")
-                        .font(.system(size: 64, weight: .semibold, design: .rounded))
-                    Text(snapshot.isCharging ? "Charging" : "On battery")
-                        .foregroundStyle(.secondary)
+                HStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(snapshot.percentage.formatted(.number.precision(.fractionLength(0))) + "%")
+                            .font(.system(size: 64, weight: .semibold, design: .rounded))
+                        Text(snapshot.isCharging ? "Charging" : "On battery")
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Power source")
+                            .foregroundStyle(.secondary)
+                        Text(snapshot.powerSource == .battery ? "Battery" : "Power adapter")
+                            .font(.title2.weight(.semibold))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .padding(24)
+                .background(VoltlineStyle.raised, in: RoundedRectangle(cornerRadius: 20))
+
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Battery timeline")
+                        .font(.title2.weight(.semibold))
+                    BatteryTimelineChart(samples: previewSamples)
+                        .frame(minHeight: 300)
+                }
+                .padding(24)
+                .background(VoltlineStyle.raised, in: RoundedRectangle(cornerRadius: 20))
             } else {
                 ContentUnavailableView(
                     "Battery unavailable",
