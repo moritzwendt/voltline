@@ -19,10 +19,11 @@ targets:
     platform: macOS
     sources:
       - Voltline
+    dependencies:
+      - sdk: IOKit.framework
     settings:
       base:
         PRODUCT_NAME: Voltline
         PRODUCT_MODULE_NAME: Voltline
         CODE_SIGN_ENTITLEMENTS: Voltline/Voltline.entitlements
     scheme: {}
-
