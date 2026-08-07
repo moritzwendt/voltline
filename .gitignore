@@ -1,0 +1,7 @@
+Docs/
+.DS_Store
+Tools/
+Exports/*
+!Exports/Voltline.icon/
+!Exports/Voltline.icon/**
+
