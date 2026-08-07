@@ -2,7 +2,6 @@ import SwiftUI
 
 struct DashboardView: View {
     @Environment(AppModel.self) private var model
-    private let previewSamples = SampleData.workday()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -41,7 +40,7 @@ struct DashboardView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Battery timeline")
                         .font(.title2.weight(.semibold))
-                    BatteryTimelineChart(samples: previewSamples)
+                    BatteryTimelineChart(samples: model.samples)
                         .frame(minHeight: 300)
                 }
                 .padding(24)
