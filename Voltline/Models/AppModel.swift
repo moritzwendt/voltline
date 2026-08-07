@@ -6,14 +6,31 @@ import Observation
 final class AppModel {
     private let hardware = BatteryHardwareService()
     private let sessionID = UUID()
+    private var pollingTask: Task<Void, Never>?
 
     var currentSnapshot: BatterySnapshot?
     var samples: [BatterySamplePoint] = []
     var lastUpdated: Date?
     var lastError: String?
+    var monitoringEnabled = true
 
     init() {
         refresh()
+    }
+
+    func start() {
+        guard pollingTask == nil else {
+            return
+        }
+        pollingTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(60))
+                guard let self, self.monitoringEnabled else {
+                    continue
+                }
+                self.refresh()
+            }
+        }
     }
 
     func refresh() {

@@ -8,8 +8,10 @@ struct VoltlineApp: App {
         WindowGroup {
             AppShellView()
                 .environment(model)
+                .task {
+                    model.start()
+                }
         }
         .defaultSize(width: 1120, height: 760)
     }
 }
-
