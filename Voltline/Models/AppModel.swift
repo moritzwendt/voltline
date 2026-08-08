@@ -1,11 +1,14 @@
 import Foundation
 import Observation
+import SwiftData
 
 @MainActor
 @Observable
 final class AppModel {
     private let hardware = BatteryHardwareService()
     private let sessionID = UUID()
+    private let modelContainer: ModelContainer
+    private let modelContext: ModelContext
     private var pollingTask: Task<Void, Never>?
 
     var currentSnapshot: BatterySnapshot?
@@ -15,6 +18,12 @@ final class AppModel {
     var monitoringEnabled = true
 
     init() {
+        do {
+            modelContainer = try VoltlinePersistence.makeContainer()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        modelContext = ModelContext(modelContainer)
         refresh()
     }
 
@@ -51,6 +60,8 @@ final class AppModel {
                 systemSleeping: snapshot.systemSleeping,
                 sessionID: sessionID
             ))
+            modelContext.insert(BatterySampleRecord(snapshot: snapshot, sessionID: sessionID))
+            try modelContext.save()
         } catch {
             lastError = error.localizedDescription
         }
