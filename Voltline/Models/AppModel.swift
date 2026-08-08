@@ -68,6 +68,21 @@ final class AppModel {
         }
     }
 
+    var recentRate: Double? {
+        BatteryAnalytics.dischargeRate(samples: samples, window: 3 * 3600)
+    }
+
+    var derivedRuntime: TimeInterval? {
+        guard let currentSnapshot else {
+            return nil
+        }
+        return BatteryAnalytics.derivedRuntime(level: currentSnapshot.percentage, rate: recentRate)
+    }
+
+    var dayMetrics: BatteryDayMetrics {
+        BatteryAnalytics.dayMetrics(samples: samples)
+    }
+
     private func loadStoredSamples() {
         var descriptor = FetchDescriptor<BatterySampleRecord>()
         descriptor.sortBy = [SortDescriptor(\BatterySampleRecord.timestamp)]

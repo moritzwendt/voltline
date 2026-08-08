@@ -27,9 +27,9 @@ struct DashboardView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Power source")
+                        Text("Average drain")
                             .foregroundStyle(.secondary)
-                        Text(snapshot.powerSource == .battery ? "Battery" : "Power adapter")
+                        Text(model.recentRate.map { abs($0).formatted(.number.precision(.fractionLength(1))) + "% per hour" } ?? "Calculating")
                             .font(.title2.weight(.semibold))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

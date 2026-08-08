@@ -28,4 +28,17 @@ targets:
         PRODUCT_NAME: Voltline
         PRODUCT_MODULE_NAME: Voltline
         CODE_SIGN_ENTITLEMENTS: Voltline/Voltline.entitlements
-    scheme: {}
+    scheme:
+      testTargets:
+        - VoltlineTests
+  VoltlineTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - VoltlineTests
+    dependencies:
+      - target: Voltline
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.moritz.voltline.tests
+        GENERATE_INFOPLIST_FILE: true

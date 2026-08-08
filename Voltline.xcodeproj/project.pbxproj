@@ -12,6 +12,7 @@
 		32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */; };
 		4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */; };
 		472527C47FE23B093652FF91 /* BatteryHardwareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9484005BE89C785378FB92C /* BatteryHardwareService.swift */; };
+		70D22E5235D39DBF89EC6032 /* BatteryAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF45DEEF3BEAE922BCE52C8 /* BatteryAnalyticsTests.swift */; };
 		7C5E31ED8E5AE682638F6B06 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F260F67FB9C1759F23596E0 /* AppModel.swift */; };
 		7D84925BECC0201CE27A223C /* VoltlineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8F6A4A85A2E3F544476F /* VoltlineStyle.swift */; };
 		889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */; };
@@ -20,9 +21,20 @@
 		AF3430445FE46B2D9124C54C /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCAA84C9DEC93942E8895BC /* SwiftData.framework */; };
 		BD4613C76DC414B85626B314 /* VoltlinePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FAA469DD601C414694E8D /* VoltlinePersistence.swift */; };
 		D1352348705B229A42BF1CA6 /* BatterySampleRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385211088490D5F33D478F2 /* BatterySampleRecord.swift */; };
+		E77327784E3044FC7F074DF0 /* BatteryAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF54440FD44A7F3734A9C34 /* BatteryAnalytics.swift */; };
 		EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9D6D2F16BCC4864F58780 /* SampleData.swift */; };
 		EBC93D062B46B60079662357 /* AppShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2DAD733DE03F07C32C2951A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD2F66EDCA6C3E54D0A33FC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D26B72FF0A5B3F15898EE8E2;
+			remoteInfo = Voltline;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0A8D8F6A4A85A2E3F544476F /* VoltlineStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineStyle.swift; sourceTree = "<group>"; };
@@ -30,10 +42,13 @@
 		1F260F67FB9C1759F23596E0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		2BA9D6D2F16BCC4864F58780 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		7DA4E211075A4AD61573F5CB /* Voltline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Voltline.entitlements; sourceTree = "<group>"; };
+		7DCCD8DF55F038F33375E972 /* VoltlineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoltlineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E3759DCD2557BE6EE724A31 /* Voltline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Voltline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		928F0B823A417E43B6B74722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CCAA84C9DEC93942E8895BC /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
+		9CF54440FD44A7F3734A9C34 /* BatteryAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryAnalytics.swift; sourceTree = "<group>"; };
 		A20E00B1A8229A2BFEAC7051 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
+		ABF45DEEF3BEAE922BCE52C8 /* BatteryAnalyticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryAnalyticsTests.swift; sourceTree = "<group>"; };
 		ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryTimelineChart.swift; sourceTree = "<group>"; };
 		B385211088490D5F33D478F2 /* BatterySampleRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySampleRecord.swift; sourceTree = "<group>"; };
 		BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineApp.swift; sourceTree = "<group>"; };
@@ -58,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05C1EF55B63D966A1F2BBF73 /* VoltlineTests */ = {
+			isa = PBXGroup;
+			children = (
+				ABF45DEEF3BEAE922BCE52C8 /* BatteryAnalyticsTests.swift */,
+			);
+			path = VoltlineTests;
+			sourceTree = "<group>";
+		};
 		10040E05773D9D1AD86E8127 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,8 +94,17 @@
 			isa = PBXGroup;
 			children = (
 				8E3759DCD2557BE6EE724A31 /* Voltline.app */,
+				7DCCD8DF55F038F33375E972 /* VoltlineTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2C3450CF760721675BCB5E98 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				9CF54440FD44A7F3734A9C34 /* BatteryAnalytics.swift */,
+			);
+			path = Analytics;
 			sourceTree = "<group>";
 		};
 		3507E252DAD88646E78A7E15 /* Views */ = {
@@ -116,6 +148,7 @@
 				928F0B823A417E43B6B74722 /* Assets.xcassets */,
 				7DA4E211075A4AD61573F5CB /* Voltline.entitlements */,
 				BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */,
+				2C3450CF760721675BCB5E98 /* Analytics */,
 				8E52FACF23418FD57C78C3E4 /* Design */,
 				513AF9236DE18D328A3BD885 /* Domain */,
 				548F48AA180EB751506F88EF /* Models */,
@@ -148,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				922CC135C24AA5F16CEFC7F7 /* Voltline */,
+				05C1EF55B63D966A1F2BBF73 /* VoltlineTests */,
 				CFA90DD7B83BACDFAB5E0EA5 /* Frameworks */,
 				185A0FA5AF402019294A5D33 /* Products */,
 			);
@@ -156,6 +190,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2C5969C7E1BD0CC9ABCB4828 /* VoltlineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6FF65724C1C3653B9C81FF7 /* Build configuration list for PBXNativeTarget "VoltlineTests" */;
+			buildPhases = (
+				E2BE3627C1C6B851ACB8D2FE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3FA592EAD611FC35987D9230 /* PBXTargetDependency */,
+			);
+			name = VoltlineTests;
+			packageProductDependencies = (
+			);
+			productName = VoltlineTests;
+			productReference = 7DCCD8DF55F038F33375E972 /* VoltlineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D26B72FF0A5B3F15898EE8E2 /* Voltline */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6BE0665E70C1878AE17F2B26 /* Build configuration list for PBXNativeTarget "Voltline" */;
@@ -184,6 +236,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					2C5969C7E1BD0CC9ABCB4828 = {
+						ProvisioningStyle = Automatic;
+					};
 					D26B72FF0A5B3F15898EE8E2 = {
 						ProvisioningStyle = Automatic;
 					};
@@ -204,6 +259,7 @@
 			projectRoot = "";
 			targets = (
 				D26B72FF0A5B3F15898EE8E2 /* Voltline */,
+				2C5969C7E1BD0CC9ABCB4828 /* VoltlineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -226,6 +282,7 @@
 			files = (
 				7C5E31ED8E5AE682638F6B06 /* AppModel.swift in Sources */,
 				EBC93D062B46B60079662357 /* AppShellView.swift in Sources */,
+				E77327784E3044FC7F074DF0 /* BatteryAnalytics.swift in Sources */,
 				472527C47FE23B093652FF91 /* BatteryHardwareService.swift in Sources */,
 				D1352348705B229A42BF1CA6 /* BatterySampleRecord.swift in Sources */,
 				889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */,
@@ -238,7 +295,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2BE3627C1C6B851ACB8D2FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70D22E5235D39DBF89EC6032 /* BatteryAnalyticsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3FA592EAD611FC35987D9230 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D26B72FF0A5B3F15898EE8E2 /* Voltline */;
+			targetProxy = 2DAD733DE03F07C32C2951A5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0D717B28112A037B46F2C36F /* Debug */ = {
@@ -328,6 +401,23 @@
 			};
 			name = Debug;
 		};
+		3AD3E182E6AC07C4A5726016 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.moritz.voltline.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Voltline.app/Contents/MacOS/Voltline";
+			};
+			name = Release;
+		};
 		3FFD9D472944F2914E10890A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -392,6 +482,23 @@
 			};
 			name = Release;
 		};
+		8D0CE0C60C4330EA44D1CAAD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.moritz.voltline.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Voltline.app/Contents/MacOS/Voltline";
+			};
+			name = Debug;
+		};
 		B618D0C19E08F5C100D60A1C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -425,6 +532,15 @@
 			buildConfigurations = (
 				0D717B28112A037B46F2C36F /* Debug */,
 				B618D0C19E08F5C100D60A1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C6FF65724C1C3653B9C81FF7 /* Build configuration list for PBXNativeTarget "VoltlineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D0CE0C60C4330EA44D1CAAD /* Debug */,
+				3AD3E182E6AC07C4A5726016 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
