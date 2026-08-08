@@ -6,7 +6,8 @@ import SwiftData
 @Observable
 final class AppModel {
     private let hardware = BatteryHardwareService()
-    private let sessionID = UUID()
+    private var currentSessionID = UUID()
+    private var previousSnapshot: BatterySnapshot?
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     private var pollingTask: Task<Void, Never>?
@@ -46,6 +47,10 @@ final class AppModel {
     func refresh() {
         do {
             let snapshot = try hardware.readSnapshot()
+            if let previousSnapshot,
+               previousSnapshot.powerSource != snapshot.powerSource || previousSnapshot.chargingState != snapshot.chargingState {
+                currentSessionID = UUID()
+            }
             currentSnapshot = snapshot
             lastUpdated = snapshot.timestamp
             lastError = nil
@@ -59,10 +64,11 @@ final class AppModel {
                 lowPowerModeEnabled: snapshot.lowPowerModeEnabled,
                 displayActive: snapshot.displayActive,
                 systemSleeping: snapshot.systemSleeping,
-                sessionID: sessionID
+                sessionID: currentSessionID
             ))
-            modelContext.insert(BatterySampleRecord(snapshot: snapshot, sessionID: sessionID))
+            modelContext.insert(BatterySampleRecord(snapshot: snapshot, sessionID: currentSessionID))
             try modelContext.save()
+            previousSnapshot = snapshot
         } catch {
             lastError = error.localizedDescription
         }

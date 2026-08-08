@@ -45,6 +45,16 @@ struct DashboardView: View {
                 }
                 .padding(24)
                 .background(VoltlineStyle.raised, in: RoundedRectangle(cornerRadius: 20))
+
+                HStack {
+                    Text("Battery sessions")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(model.dayMetrics.sessionCount.formatted())
+                        .font(.title2.weight(.semibold))
+                }
+                .padding(20)
+                .background(VoltlineStyle.raised, in: RoundedRectangle(cornerRadius: 20))
             } else {
                 ContentUnavailableView(
                     "Battery unavailable",
