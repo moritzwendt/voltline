@@ -24,6 +24,7 @@ final class AppModel {
             fatalError(error.localizedDescription)
         }
         modelContext = ModelContext(modelContainer)
+        loadStoredSamples()
         refresh()
     }
 
@@ -62,6 +63,16 @@ final class AppModel {
             ))
             modelContext.insert(BatterySampleRecord(snapshot: snapshot, sessionID: sessionID))
             try modelContext.save()
+        } catch {
+            lastError = error.localizedDescription
+        }
+    }
+
+    private func loadStoredSamples() {
+        var descriptor = FetchDescriptor<BatterySampleRecord>()
+        descriptor.sortBy = [SortDescriptor(\BatterySampleRecord.timestamp)]
+        do {
+            samples = try modelContext.fetch(descriptor).map(\.point)
         } catch {
             lastError = error.localizedDescription
         }
