@@ -14,6 +14,7 @@ final class AppModel {
 
     var currentSnapshot: BatterySnapshot?
     var samples: [BatterySamplePoint] = []
+    var selectedDate = Date.now
     var lastUpdated: Date?
     var lastError: String?
     var monitoringEnabled = true
@@ -86,7 +87,15 @@ final class AppModel {
     }
 
     var dayMetrics: BatteryDayMetrics {
-        BatteryAnalytics.dayMetrics(samples: samples)
+        BatteryAnalytics.dayMetrics(samples: samplesForSelectedDay)
+    }
+
+    var samplesForSelectedDay: [BatterySamplePoint] {
+        samples.filter { Calendar.current.isDate($0.timestamp, inSameDayAs: selectedDate) }
+    }
+
+    func selectDate(_ date: Date) {
+        selectedDate = Calendar.current.startOfDay(for: date)
     }
 
     private func loadStoredSamples() {

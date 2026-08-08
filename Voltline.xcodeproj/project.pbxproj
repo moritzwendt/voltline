@@ -21,6 +21,7 @@
 		AF3430445FE46B2D9124C54C /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCAA84C9DEC93942E8895BC /* SwiftData.framework */; };
 		BD4613C76DC414B85626B314 /* VoltlinePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FAA469DD601C414694E8D /* VoltlinePersistence.swift */; };
 		D1352348705B229A42BF1CA6 /* BatterySampleRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385211088490D5F33D478F2 /* BatterySampleRecord.swift */; };
+		E300FEB8CBBB125F14E92988 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF7D162B4F9FB0EB05060D /* HistoryView.swift */; };
 		E77327784E3044FC7F074DF0 /* BatteryAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF54440FD44A7F3734A9C34 /* BatteryAnalytics.swift */; };
 		EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9D6D2F16BCC4864F58780 /* SampleData.swift */; };
 		EBC93D062B46B60079662357 /* AppShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */; };
@@ -56,6 +57,7 @@
 		D9484005BE89C785378FB92C /* BatteryHardwareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHardwareService.swift; sourceTree = "<group>"; };
 		E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySnapshot.swift; sourceTree = "<group>"; };
 		ED248AC44059CFA19CE751A9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		F4DF7D162B4F9FB0EB05060D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		FF6FAA469DD601C414694E8D /* VoltlinePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlinePersistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */,
 				ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */,
 				C3732C4FE01B65A7B05600C8 /* DashboardView.swift */,
+				F4DF7D162B4F9FB0EB05060D /* HistoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */,
 				4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */,
 				930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */,
+				E300FEB8CBBB125F14E92988 /* HistoryView.swift in Sources */,
 				EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */,
 				32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */,
 				BD4613C76DC414B85626B314 /* VoltlinePersistence.swift in Sources */,
