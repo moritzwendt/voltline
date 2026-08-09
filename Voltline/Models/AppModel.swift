@@ -17,7 +17,16 @@ final class AppModel {
     var selectedDate = Date.now
     var lastUpdated: Date?
     var lastError: String?
-    var monitoringEnabled = true
+    var monitoringEnabled = true {
+        didSet {
+            restartPolling()
+        }
+    }
+    var refreshInterval: TimeInterval = 60 {
+        didSet {
+            restartPolling()
+        }
+    }
 
     init() {
         do {
@@ -31,15 +40,21 @@ final class AppModel {
     }
 
     func start() {
-        guard pollingTask == nil else {
+        restartPolling()
+    }
+
+    private func restartPolling() {
+        pollingTask?.cancel()
+        pollingTask = nil
+        guard monitoringEnabled else {
             return
         }
         pollingTask = Task { [weak self] in
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(60))
-                guard let self, self.monitoringEnabled else {
-                    continue
+                guard let self else {
+                    return
                 }
+                try? await Task.sleep(for: .seconds(self.refreshInterval))
                 self.refresh()
             }
         }
