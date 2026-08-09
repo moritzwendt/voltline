@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Observation
 import SwiftData
@@ -11,6 +12,8 @@ final class AppModel {
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     private var pollingTask: Task<Void, Never>?
+    private var eventBridge: BatteryEventBridge?
+    private var systemSleeping = false
 
     var currentSnapshot: BatterySnapshot?
     var samples: [BatterySamplePoint] = []
@@ -40,6 +43,7 @@ final class AppModel {
     }
 
     func start() {
+        eventBridge = BatteryEventBridge(model: self)
         restartPolling()
     }
 
@@ -62,7 +66,7 @@ final class AppModel {
 
     func refresh() {
         do {
-            let snapshot = try hardware.readSnapshot()
+            let snapshot = try hardware.readSnapshot(systemSleeping: systemSleeping)
             if let previousSnapshot,
                previousSnapshot.powerSource != snapshot.powerSource || previousSnapshot.chargingState != snapshot.chargingState {
                 currentSessionID = UUID()
@@ -87,6 +91,14 @@ final class AppModel {
             previousSnapshot = snapshot
         } catch {
             lastError = error.localizedDescription
+        }
+    }
+
+    func handleSystemSleep(_ sleeping: Bool) {
+        systemSleeping = sleeping
+        if !sleeping {
+            refresh()
+            restartPolling()
         }
     }
 
@@ -121,5 +133,26 @@ final class AppModel {
         } catch {
             lastError = error.localizedDescription
         }
+    }
+}
+
+@MainActor
+private final class BatteryEventBridge: NSObject {
+    private weak var model: AppModel?
+
+    init(model: AppModel) {
+        self.model = model
+        super.init()
+        let workspace = NSWorkspace.shared.notificationCenter
+        workspace.addObserver(self, selector: #selector(willSleep), name: NSWorkspace.willSleepNotification, object: nil)
+        workspace.addObserver(self, selector: #selector(didWake), name: NSWorkspace.didWakeNotification, object: nil)
+    }
+
+    @objc private func willSleep() {
+        model?.handleSystemSleep(true)
+    }
+
+    @objc private func didWake() {
+        model?.handleSystemSleep(false)
     }
 }
