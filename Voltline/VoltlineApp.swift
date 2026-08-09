@@ -19,6 +19,11 @@ struct VoltlineApp: App {
                 }
         }
         .defaultSize(width: 1120, height: 760)
+
+        Settings {
+            SettingsView()
+                .environment(model)
+        }
     }
 }
 

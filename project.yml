@@ -23,6 +23,7 @@ targets:
       - sdk: IOKit.framework
       - sdk: Charts.framework
       - sdk: SwiftData.framework
+      - sdk: ServiceManagement.framework
     settings:
       base:
         PRODUCT_NAME: Voltline
