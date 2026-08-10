@@ -17,6 +17,14 @@ struct MenuBarView: View {
                 }
             }
 
+            ForEach(model.accessories) { device in
+                HStack {
+                    Text(device.name)
+                    Spacer()
+                    Text("\(device.level)%")
+                }
+            }
+
             Divider()
 
             Button("Open Voltline") {
@@ -29,4 +37,3 @@ struct MenuBarView: View {
         .frame(width: 240)
     }
 }
-

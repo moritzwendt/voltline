@@ -20,6 +20,7 @@ final class AppModel {
     var selectedDate = Date.now
     var lastUpdated: Date?
     var lastError: String?
+    var accessories: [BatteryDevice] = []
     var monitoringEnabled = true {
         didSet {
             restartPolling()
@@ -45,6 +46,7 @@ final class AppModel {
     func start() {
         eventBridge = BatteryEventBridge(model: self)
         restartPolling()
+        refreshAccessories()
     }
 
     private func restartPolling() {
@@ -100,6 +102,10 @@ final class AppModel {
             refresh()
             restartPolling()
         }
+    }
+
+    func refreshAccessories() {
+        accessories = AccessoryBatteryService().scan()
     }
 
     var recentRate: Double? {
