@@ -13,6 +13,8 @@ final class AppModel {
     private let modelContext: ModelContext
     private var pollingTask: Task<Void, Never>?
     private var eventBridge: BatteryEventBridge?
+    private var bluetoothConnectionBridge: BluetoothConnectionBridge?
+    private var bleScanner: BLEAccessoryScanner?
     private var systemSleeping = false
 
     var currentSnapshot: BatterySnapshot?
@@ -45,6 +47,15 @@ final class AppModel {
 
     func start() {
         eventBridge = BatteryEventBridge(model: self)
+        bluetoothConnectionBridge = BluetoothConnectionBridge { [weak self] in
+            self?.refreshAccessories()
+        }
+        let scanner = BLEAccessoryScanner()
+        scanner.onDevicesChanged = { [weak self] devices in
+            self?.mergeAccessories(devices)
+        }
+        scanner.start(interval: 60)
+        bleScanner = scanner
         restartPolling()
         refreshAccessories()
     }
@@ -105,7 +116,17 @@ final class AppModel {
     }
 
     func refreshAccessories() {
-        accessories = AccessoryBatteryService().scan()
+        var found = AccessoryBatteryService().scan()
+        found.append(contentsOf: EnhancedBluetoothBatteryService().scan())
+        mergeAccessories(found)
+    }
+
+    private func mergeAccessories(_ found: [BatteryDevice]) {
+        var merged = Dictionary(uniqueKeysWithValues: accessories.map { ($0.id, $0) })
+        for device in found {
+            merged[device.id] = device
+        }
+        accessories = merged.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
     }
 
     var recentRate: Double? {

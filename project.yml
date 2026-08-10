@@ -26,6 +26,7 @@ targets:
       - sdk: SwiftData.framework
       - sdk: ServiceManagement.framework
       - sdk: IOBluetooth.framework
+      - sdk: CoreBluetooth.framework
     settings:
       base:
         PRODUCT_NAME: Voltline
