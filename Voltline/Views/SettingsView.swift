@@ -3,6 +3,12 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(AppModel.self) private var model
+    @AppStorage("showMenuBar") private var showMenuBar = true
+    @AppStorage("menuBarDynamicIcon") private var dynamicIcon = true
+    @AppStorage("menuBarPercentageMode") private var percentageMode = MenuBarPercentageMode.outside.rawValue
+    @AppStorage("menuBarColorful") private var colorfulIcon = false
+    @AppStorage("menuBarIOSShape") private var iosShape = false
+    @AppStorage("menuBarHidePercentageAbove") private var hidePercentageAbove = 100.0
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
@@ -24,6 +30,21 @@ struct SettingsView: View {
                         updateLoginItem(enabled)
                     }
             }
+
+            Section("Menu bar") {
+                Toggle("Show menu bar item", isOn: $showMenuBar)
+                Toggle("Dynamic battery icon", isOn: $dynamicIcon)
+                Toggle("Colorful icon", isOn: $colorfulIcon)
+                Toggle("iOS battery shape", isOn: $iosShape)
+                Picker("Percentage", selection: $percentageMode) {
+                    ForEach(MenuBarPercentageMode.allCases) { mode in
+                        Text(mode.title).tag(mode.rawValue)
+                    }
+                }
+                Slider(value: $hidePercentageAbove, in: 50 ... 100, step: 5) {
+                    Text("Hide percentage above")
+                }
+            }
         }
         .formStyle(.grouped)
         .frame(width: 520, height: 320)
@@ -41,4 +62,3 @@ struct SettingsView: View {
         }
     }
 }
-

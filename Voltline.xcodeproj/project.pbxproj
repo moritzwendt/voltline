@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0296EC5ACAAFEE319204537B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED248AC44059CFA19CE751A9 /* IOKit.framework */; };
 		095683C74BA73774FAC1FA57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928F0B823A417E43B6B74722 /* Assets.xcassets */; };
+		2A8972D9C1BF61D2F607BAFE /* MenuBarBatteryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */; };
 		2F9CBE17649B32B475EFF197 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC4E57647E2955B398B5E2 /* MenuBarView.swift */; };
 		32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */; };
 		4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */; };
@@ -61,6 +62,7 @@
 		B385211088490D5F33D478F2 /* BatterySampleRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySampleRecord.swift; sourceTree = "<group>"; };
 		BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineApp.swift; sourceTree = "<group>"; };
 		C3732C4FE01B65A7B05600C8 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarBatteryIcon.swift; sourceTree = "<group>"; };
 		D9484005BE89C785378FB92C /* BatteryHardwareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHardwareService.swift; sourceTree = "<group>"; };
 		E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySnapshot.swift; sourceTree = "<group>"; };
 		E5F7858D6864EAD98456CDC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */,
 				C3732C4FE01B65A7B05600C8 /* DashboardView.swift */,
 				F4DF7D162B4F9FB0EB05060D /* HistoryView.swift */,
+				D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */,
 				08BC4E57647E2955B398B5E2 /* MenuBarView.swift */,
 				E5F7858D6864EAD98456CDC5 /* SettingsView.swift */,
 			);
@@ -305,6 +308,7 @@
 				4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */,
 				930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */,
 				E300FEB8CBBB125F14E92988 /* HistoryView.swift in Sources */,
+				2A8972D9C1BF61D2F607BAFE /* MenuBarBatteryIcon.swift in Sources */,
 				2F9CBE17649B32B475EFF197 /* MenuBarView.swift in Sources */,
 				EB15AC0D79C444B50F32602E /* SampleData.swift in Sources */,
 				E8FC8D3D52826AD97E26306B /* SettingsView.swift in Sources */,
