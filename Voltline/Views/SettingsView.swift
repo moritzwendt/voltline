@@ -67,6 +67,11 @@ struct SettingsView: View {
                     }
                 }
             }
+
+            Section("Alerts") {
+                Toggle("Low battery alerts", isOn: $model.lowBatteryAlertsEnabled)
+                Stepper("Alert at \(model.lowBatteryAlertLevel)%", value: $model.lowBatteryAlertLevel, in: 5 ... 50, step: 5)
+            }
         }
         .formStyle(.grouped)
         .frame(width: 520, height: 320)

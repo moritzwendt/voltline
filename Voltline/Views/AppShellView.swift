@@ -4,11 +4,13 @@ struct AppShellView: View {
     private enum Destination: String, Hashable, CaseIterable {
         case overview = "Overview"
         case history = "History"
+        case insights = "Insights"
 
         var symbol: String {
             switch self {
             case .overview: "waveform.path.ecg"
             case .history: "clock.arrow.trianglehead.counterclockwise.rotate.90"
+            case .insights: "sparkles"
             }
         }
     }
@@ -26,6 +28,7 @@ struct AppShellView: View {
                 switch selection {
                 case .overview: DashboardView()
                 case .history: HistoryView()
+                case .insights: InsightsView()
                 }
             }
             .frame(minWidth: 760, minHeight: 620)

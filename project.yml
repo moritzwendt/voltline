@@ -27,6 +27,7 @@ targets:
       - sdk: ServiceManagement.framework
       - sdk: IOBluetooth.framework
       - sdk: CoreBluetooth.framework
+      - sdk: UserNotifications.framework
     settings:
       base:
         PRODUCT_NAME: Voltline

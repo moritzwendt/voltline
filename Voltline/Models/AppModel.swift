@@ -2,6 +2,7 @@ import AppKit
 import Foundation
 import Observation
 import SwiftData
+import UserNotifications
 
 @MainActor
 @Observable
@@ -24,6 +25,8 @@ final class AppModel {
     var lastError: String?
     var accessories: [BatteryDevice] = []
     var accessoryOfflineMinutes = 20
+    var lowBatteryAlertsEnabled = false
+    var lowBatteryAlertLevel = 20
     private var hiddenDeviceIDs = Set(UserDefaults.standard.stringArray(forKey: "hiddenDeviceIDs") ?? [])
     var monitoringEnabled = true {
         didSet {
@@ -60,6 +63,7 @@ final class AppModel {
         bleScanner = scanner
         restartPolling()
         refreshAccessories()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
 
     private func restartPolling() {
@@ -104,6 +108,7 @@ final class AppModel {
             modelContext.insert(BatterySampleRecord(snapshot: snapshot, sessionID: currentSessionID))
             try modelContext.save()
             previousSnapshot = snapshot
+            evaluateLowBatteryAlert(snapshot)
         } catch {
             lastError = error.localizedDescription
         }
@@ -154,6 +159,19 @@ final class AppModel {
     private func pruneAccessories() {
         let cutoff = Date.now.addingTimeInterval(TimeInterval(0 - accessoryOfflineMinutes * 60))
         accessories.removeAll { $0.lastSeen < cutoff && !hiddenDeviceIDs.contains($0.id) }
+    }
+
+    private func evaluateLowBatteryAlert(_ snapshot: BatterySnapshot) {
+        guard lowBatteryAlertsEnabled,
+              snapshot.powerSource == .battery,
+              snapshot.percentage <= Double(lowBatteryAlertLevel) else {
+            return
+        }
+        let content = UNMutableNotificationContent()
+        content.title = "Battery at \(Int(snapshot.percentage.rounded()))%"
+        content.sound = .default
+        let request = UNNotificationRequest(identifier: "voltline.lowbattery", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request)
     }
 
     var recentRate: Double? {

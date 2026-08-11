@@ -30,11 +30,13 @@
 		889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */; };
 		8A382237808CC9CCB04DB2D6 /* libplist-2.0.4.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEF933246D6D75F7B6E66E7 /* libplist-2.0.4.dylib */; };
 		930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3732C4FE01B65A7B05600C8 /* DashboardView.swift */; };
+		94E3B42AFBE7653F6222540F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8AA42120D483DE1D7DD3315 /* UserNotifications.framework */; };
 		A2D08069B00FED95AAD9D5AB /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20E00B1A8229A2BFEAC7051 /* Charts.framework */; };
 		AF3430445FE46B2D9124C54C /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCAA84C9DEC93942E8895BC /* SwiftData.framework */; };
 		BADC743EC524B04E78FFF7DD /* libusbmuxd-2.0.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 403E9DAF79355C8C20EF0FC5 /* libusbmuxd-2.0.6.dylib */; };
 		BC4D6E4EC793A15EC0A9CB8A /* libssl.3.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 5003C015B9BF52D626C41A0D /* libssl.3.dylib */; };
 		BD4613C76DC414B85626B314 /* VoltlinePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FAA469DD601C414694E8D /* VoltlinePersistence.swift */; };
+		C81156092B002854028E4999 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EC0829595CC7F1844D039A /* InsightsView.swift */; };
 		CD2227CCEC1F87F80CD03EE5 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A3AD9AD117B4E311A34F6E /* IOBluetooth.framework */; };
 		CF01C5009CD5686B592BDE8E /* libimobiledevice-glue-1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 1F334125D3D99441000EA4C6 /* libimobiledevice-glue-1.0.0.dylib */; };
 		D1352348705B229A42BF1CA6 /* BatterySampleRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385211088490D5F33D478F2 /* BatterySampleRecord.swift */; };
@@ -81,6 +83,7 @@
 		7FDE9DB7BC6F890FE9A150B3 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		8E3759DCD2557BE6EE724A31 /* Voltline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Voltline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		928F0B823A417E43B6B74722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94EC0829595CC7F1844D039A /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		9CCAA84C9DEC93942E8895BC /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		9CF54440FD44A7F3734A9C34 /* BatteryAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryAnalytics.swift; sourceTree = "<group>"; };
 		A20E00B1A8229A2BFEAC7051 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,7 @@
 		BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltlineApp.swift; sourceTree = "<group>"; };
 		C3732C4FE01B65A7B05600C8 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C87AD7C27094E1247A36E922 /* libimobiledevice-1.0.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libimobiledevice-1.0.6.dylib"; sourceTree = "<group>"; };
+		C8AA42120D483DE1D7DD3315 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		C92A68ACD1A15774D2D87FAE /* idevicesyslog */ = {isa = PBXFileReference; path = idevicesyslog; sourceTree = "<group>"; };
 		D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarBatteryIcon.swift; sourceTree = "<group>"; };
 		D9484005BE89C785378FB92C /* BatteryHardwareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHardwareService.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				E80AD813CFE22DCA34BB05D0 /* ServiceManagement.framework in Frameworks */,
 				CD2227CCEC1F87F80CD03EE5 /* IOBluetooth.framework in Frameworks */,
 				552CD8AD658CC09BD186181F /* CoreBluetooth.framework in Frameworks */,
+				94E3B42AFBE7653F6222540F /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +196,7 @@
 				ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */,
 				C3732C4FE01B65A7B05600C8 /* DashboardView.swift */,
 				F4DF7D162B4F9FB0EB05060D /* HistoryView.swift */,
+				94EC0829595CC7F1844D039A /* InsightsView.swift */,
 				D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */,
 				08BC4E57647E2955B398B5E2 /* MenuBarView.swift */,
 				E5F7858D6864EAD98456CDC5 /* SettingsView.swift */,
@@ -278,6 +284,7 @@
 				ED248AC44059CFA19CE751A9 /* IOKit.framework */,
 				7FDE9DB7BC6F890FE9A150B3 /* ServiceManagement.framework */,
 				9CCAA84C9DEC93942E8895BC /* SwiftData.framework */,
+				C8AA42120D483DE1D7DD3315 /* UserNotifications.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -416,6 +423,7 @@
 				930A3578809432BB3A0BEF2B /* DashboardView.swift in Sources */,
 				1986ECBF722503C3B82F5E02 /* EnhancedBluetoothBatteryService.swift in Sources */,
 				E300FEB8CBBB125F14E92988 /* HistoryView.swift in Sources */,
+				C81156092B002854028E4999 /* InsightsView.swift in Sources */,
 				2A8972D9C1BF61D2F607BAFE /* MenuBarBatteryIcon.swift in Sources */,
 				2F9CBE17649B32B475EFF197 /* MenuBarView.swift in Sources */,
 				030EE978539DBAD8E28ECE2D /* MobileDeviceBatteryService.swift in Sources */,
