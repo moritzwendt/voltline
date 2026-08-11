@@ -12,6 +12,7 @@
 		095683C74BA73774FAC1FA57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928F0B823A417E43B6B74722 /* Assets.xcassets */; };
 		1986ECBF722503C3B82F5E02 /* EnhancedBluetoothBatteryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F5AD792EDE427EE8F1C01 /* EnhancedBluetoothBatteryService.swift */; };
 		2A8972D9C1BF61D2F607BAFE /* MenuBarBatteryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4068010FCFDB1AA8D20BA /* MenuBarBatteryIcon.swift */; };
+		2B8342E129E87475DF5A8DDD /* LegacyHistoryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A54758E3A7F506A5734D2D /* LegacyHistoryImporter.swift */; };
 		2F9CBE17649B32B475EFF197 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC4E57647E2955B398B5E2 /* MenuBarView.swift */; };
 		32C713E65747FD00CFE5D9EA /* VoltlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F2FB45B34DFB76E26B22B /* VoltlineApp.swift */; };
 		3684C69AF28871DFF2C752EA /* libcrypto.3.dylib in Resources */ = {isa = PBXBuildFile; fileRef = A7D6822BEA2D5C259FA5790C /* libcrypto.3.dylib */; };
@@ -20,7 +21,6 @@
 		4182AF50DA90B5478D1326CD /* BatteryTimelineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF132C65208D280BAE010DF /* BatteryTimelineChart.swift */; };
 		4212E51A108D61503758FAFA /* AccessoryBatteryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521C688891ABADB7FAD16A2 /* AccessoryBatteryService.swift */; };
 		472527C47FE23B093652FF91 /* BatteryHardwareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9484005BE89C785378FB92C /* BatteryHardwareService.swift */; };
-		552CD8AD658CC09BD186181F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75567E2CADE96C3E515C2B5F /* CoreBluetooth.framework */; };
 		67E2E6033F91453C7A1DFBC6 /* BLEAccessoryScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE1833AC3FF639C6623D6F /* BLEAccessoryScanner.swift */; };
 		6B8ABFFFF801979BF544A5EE /* logReader.sh in Resources */ = {isa = PBXBuildFile; fileRef = DAEE48D29486A493B432CE36 /* logReader.sh */; };
 		70D22E5235D39DBF89EC6032 /* BatteryAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF45DEEF3BEAE922BCE52C8 /* BatteryAnalyticsTests.swift */; };
@@ -74,8 +74,8 @@
 		403E9DAF79355C8C20EF0FC5 /* libusbmuxd-2.0.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libusbmuxd-2.0.6.dylib"; sourceTree = "<group>"; };
 		5003C015B9BF52D626C41A0D /* libssl.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.3.dylib; sourceTree = "<group>"; };
 		573F9D44122C4B1ACBD491A5 /* wificonnection */ = {isa = PBXFileReference; path = wificonnection; sourceTree = "<group>"; };
+		58A54758E3A7F506A5734D2D /* LegacyHistoryImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyHistoryImporter.swift; sourceTree = "<group>"; };
 		5A5AFAE2D74F13A5DEF9F254 /* BluetoothConnectionBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothConnectionBridge.swift; sourceTree = "<group>"; };
-		75567E2CADE96C3E515C2B5F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		77AEC41E0E482C2A74DB7858 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
 		77CB2C7BD0540C49F83FE6B8 /* AirBattery LICENSE */ = {isa = PBXFileReference; path = "AirBattery LICENSE"; sourceTree = "<group>"; };
 		7DA4E211075A4AD61573F5CB /* Voltline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Voltline.entitlements; sourceTree = "<group>"; };
@@ -124,7 +124,6 @@
 				AF3430445FE46B2D9124C54C /* SwiftData.framework in Frameworks */,
 				E80AD813CFE22DCA34BB05D0 /* ServiceManagement.framework in Frameworks */,
 				CD2227CCEC1F87F80CD03EE5 /* IOBluetooth.framework in Frameworks */,
-				552CD8AD658CC09BD186181F /* CoreBluetooth.framework in Frameworks */,
 				94E3B42AFBE7653F6222540F /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				B385211088490D5F33D478F2 /* BatterySampleRecord.swift */,
+				58A54758E3A7F506A5734D2D /* LegacyHistoryImporter.swift */,
 				FF6FAA469DD601C414694E8D /* VoltlinePersistence.swift */,
 			);
 			path = Persistence;
@@ -279,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				A20E00B1A8229A2BFEAC7051 /* Charts.framework */,
-				75567E2CADE96C3E515C2B5F /* CoreBluetooth.framework */,
 				E8A3AD9AD117B4E311A34F6E /* IOBluetooth.framework */,
 				ED248AC44059CFA19CE751A9 /* IOKit.framework */,
 				7FDE9DB7BC6F890FE9A150B3 /* ServiceManagement.framework */,
@@ -361,9 +360,6 @@
 					2C5969C7E1BD0CC9ABCB4828 = {
 						ProvisioningStyle = Automatic;
 					};
-					D26B72FF0A5B3F15898EE8E2 = {
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = 2568D0A9DADF2200EC660F8C /* Build configuration list for PBXProject "Voltline" */;
@@ -424,6 +420,7 @@
 				1986ECBF722503C3B82F5E02 /* EnhancedBluetoothBatteryService.swift in Sources */,
 				E300FEB8CBBB125F14E92988 /* HistoryView.swift in Sources */,
 				C81156092B002854028E4999 /* InsightsView.swift in Sources */,
+				2B8342E129E87475DF5A8DDD /* LegacyHistoryImporter.swift in Sources */,
 				2A8972D9C1BF61D2F607BAFE /* MenuBarBatteryIcon.swift in Sources */,
 				2F9CBE17649B32B475EFF197 /* MenuBarView.swift in Sources */,
 				030EE978539DBAD8E28ECE2D /* MobileDeviceBatteryService.swift in Sources */,
@@ -460,7 +457,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = Voltline/Voltline.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -476,6 +477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -565,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

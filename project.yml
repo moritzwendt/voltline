@@ -14,6 +14,7 @@ settings:
     INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Voltline reads battery levels from connected devices.
     ENABLE_APP_SANDBOX: false
     ENABLE_HARDENED_RUNTIME: true
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
 targets:
   Voltline:
     type: application
@@ -26,13 +27,18 @@ targets:
       - sdk: SwiftData.framework
       - sdk: ServiceManagement.framework
       - sdk: IOBluetooth.framework
-      - sdk: CoreBluetooth.framework
       - sdk: UserNotifications.framework
     settings:
       base:
         PRODUCT_NAME: Voltline
         PRODUCT_MODULE_NAME: Voltline
         CODE_SIGN_ENTITLEMENTS: Voltline/Voltline.entitlements
+      configs:
+        Debug:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: "-"
+          CODE_SIGNING_ALLOWED: true
+          CODE_SIGNING_REQUIRED: true
     scheme:
       testTargets:
         - VoltlineTests
