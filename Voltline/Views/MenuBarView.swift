@@ -17,7 +17,7 @@ struct MenuBarView: View {
                 }
             }
 
-            ForEach(model.accessories) { device in
+            ForEach(model.visibleAccessories) { device in
                 HStack {
                     Text(device.name)
                     Spacer()

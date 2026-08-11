@@ -45,6 +45,28 @@ struct SettingsView: View {
                     Text("Hide percentage above")
                 }
             }
+
+            Section("Devices") {
+                Stepper("Remove offline devices after \(model.accessoryOfflineMinutes) minutes", value: $model.accessoryOfflineMinutes, in: 5 ... 120, step: 5)
+                ForEach(model.visibleAccessories) { device in
+                    HStack {
+                        Text(device.name)
+                        Spacer()
+                        Button("Hide") {
+                            model.hide(device)
+                        }
+                    }
+                }
+                ForEach(model.hiddenAccessories) { device in
+                    HStack {
+                        Text(device.name)
+                        Spacer()
+                        Button("Show") {
+                            model.show(device)
+                        }
+                    }
+                }
+            }
         }
         .formStyle(.grouped)
         .frame(width: 520, height: 320)

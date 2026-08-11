@@ -23,6 +23,8 @@ final class AppModel {
     var lastUpdated: Date?
     var lastError: String?
     var accessories: [BatteryDevice] = []
+    var accessoryOfflineMinutes = 20
+    private var hiddenDeviceIDs = Set(UserDefaults.standard.stringArray(forKey: "hiddenDeviceIDs") ?? [])
     var monitoringEnabled = true {
         didSet {
             restartPolling()
@@ -119,6 +121,7 @@ final class AppModel {
         var found = AccessoryBatteryService().scan()
         found.append(contentsOf: EnhancedBluetoothBatteryService().scan())
         mergeAccessories(found)
+        pruneAccessories()
     }
 
     private func mergeAccessories(_ found: [BatteryDevice]) {
@@ -127,6 +130,29 @@ final class AppModel {
             merged[device.id] = device
         }
         accessories = merged.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
+    var visibleAccessories: [BatteryDevice] {
+        accessories.filter { !hiddenDeviceIDs.contains($0.id) }
+    }
+
+    var hiddenAccessories: [BatteryDevice] {
+        accessories.filter { hiddenDeviceIDs.contains($0.id) }
+    }
+
+    func hide(_ device: BatteryDevice) {
+        hiddenDeviceIDs.insert(device.id)
+        UserDefaults.standard.set(Array(hiddenDeviceIDs), forKey: "hiddenDeviceIDs")
+    }
+
+    func show(_ device: BatteryDevice) {
+        hiddenDeviceIDs.remove(device.id)
+        UserDefaults.standard.set(Array(hiddenDeviceIDs), forKey: "hiddenDeviceIDs")
+    }
+
+    private func pruneAccessories() {
+        let cutoff = Date.now.addingTimeInterval(TimeInterval(0 - accessoryOfflineMinutes * 60))
+        accessories.removeAll { $0.lastSeen < cutoff && !hiddenDeviceIDs.contains($0.id) }
     }
 
     var recentRate: Double? {
