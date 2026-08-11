@@ -120,6 +120,7 @@ final class AppModel {
     func refreshAccessories() {
         var found = AccessoryBatteryService().scan()
         found.append(contentsOf: EnhancedBluetoothBatteryService().scan())
+        found.append(contentsOf: MobileDeviceBatteryService().scan())
         mergeAccessories(found)
         pruneAccessories()
     }
