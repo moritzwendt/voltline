@@ -33,6 +33,7 @@
 		94E3B42AFBE7653F6222540F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8AA42120D483DE1D7DD3315 /* UserNotifications.framework */; };
 		A2D08069B00FED95AAD9D5AB /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20E00B1A8229A2BFEAC7051 /* Charts.framework */; };
 		AF3430445FE46B2D9124C54C /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCAA84C9DEC93942E8895BC /* SwiftData.framework */; };
+		B20C703C2863D21B913065D9 /* Voltline.icon in Resources */ = {isa = PBXBuildFile; fileRef = 24FFB49D6BD9142113B1C4EC /* Voltline.icon */; };
 		BADC743EC524B04E78FFF7DD /* libusbmuxd-2.0.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 403E9DAF79355C8C20EF0FC5 /* libusbmuxd-2.0.6.dylib */; };
 		BB604F16743AF76F33DD03F9 /* HistoryImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7132116FFD562B323CC10C5B /* HistoryImportTests.swift */; };
 		BC4D6E4EC793A15EC0A9CB8A /* libssl.3.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 5003C015B9BF52D626C41A0D /* libssl.3.dylib */; };
@@ -69,6 +70,7 @@
 		1F260F67FB9C1759F23596E0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		1F334125D3D99441000EA4C6 /* libimobiledevice-glue-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libimobiledevice-glue-1.0.0.dylib"; sourceTree = "<group>"; };
 		21FE1833AC3FF639C6623D6F /* BLEAccessoryScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEAccessoryScanner.swift; sourceTree = "<group>"; };
+		24FFB49D6BD9142113B1C4EC /* Voltline.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Voltline.icon; sourceTree = "<group>"; };
 		25C9986E75030875CE318F6F /* BatteryDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryDevice.swift; sourceTree = "<group>"; };
 		2BA9D6D2F16BCC4864F58780 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		3CEF933246D6D75F7B6E66E7 /* libplist-2.0.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libplist-2.0.4.dylib"; sourceTree = "<group>"; };
@@ -278,6 +280,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		CF13BC689DD02AAA4154F32D /* Exports */ = {
+			isa = PBXGroup;
+			children = (
+				24FFB49D6BD9142113B1C4EC /* Voltline.icon */,
+			);
+			path = Exports;
+			sourceTree = "<group>";
+		};
 		CFA90DD7B83BACDFAB5E0EA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,6 +304,7 @@
 		EC559F22C0F04EA259A92DCF = {
 			isa = PBXGroup;
 			children = (
+				CF13BC689DD02AAA4154F32D /* Exports */,
 				922CC135C24AA5F16CEFC7F7 /* Voltline */,
 				05C1EF55B63D966A1F2BBF73 /* VoltlineTests */,
 				CFA90DD7B83BACDFAB5E0EA5 /* Frameworks */,
@@ -391,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				095683C74BA73774FAC1FA57 /* Assets.xcassets in Resources */,
+				B20C703C2863D21B913065D9 /* Voltline.icon in Resources */,
 				3684C69AF28871DFF2C752EA /* libcrypto.3.dylib in Resources */,
 				3847EF9BF959615DE4E3ADAB /* libimobiledevice-1.0.6.dylib in Resources */,
 				CF01C5009CD5686B592BDE8E /* libimobiledevice-glue-1.0.0.dylib in Resources */,
@@ -460,7 +472,7 @@
 		0D717B28112A037B46F2C36F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Voltline;
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = Voltline/Voltline.entitlements;
@@ -653,7 +665,7 @@
 		B618D0C19E08F5C100D60A1C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Voltline;
 				CODE_SIGN_ENTITLEMENTS = Voltline/Voltline.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

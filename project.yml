@@ -21,6 +21,8 @@ targets:
     platform: macOS
     sources:
       - Voltline
+      - path: Exports/Voltline.icon
+        buildPhase: resources
     dependencies:
       - sdk: IOKit.framework
       - sdk: Charts.framework
@@ -33,6 +35,7 @@ targets:
         PRODUCT_NAME: Voltline
         PRODUCT_MODULE_NAME: Voltline
         CODE_SIGN_ENTITLEMENTS: Voltline/Voltline.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: Voltline
       configs:
         Debug:
           CODE_SIGN_STYLE: Manual
