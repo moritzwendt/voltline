@@ -10,8 +10,35 @@ struct BatteryTimelineChart: View {
         BatteryAnalytics.downsample(samples: samples, maxPoints: 720)
     }
 
+    private var graphSamples: [BatterySamplePoint] {
+        displaySamples.map { sample in
+            let window: TimeInterval = 8 * 60
+            let nearbySamples = displaySamples.compactMap { candidate -> (BatterySamplePoint, Double)? in
+                let distance = abs(candidate.timestamp.timeIntervalSince(sample.timestamp))
+                guard distance <= window else {
+                    return nil
+                }
+                return (candidate, 1 - distance / window)
+            }
+            let totalWeight = nearbySamples.reduce(0) { $0 + $1.1 }
+            let level = nearbySamples.reduce(0) { $0 + $1.0.batteryLevel * $1.1 } / max(totalWeight, 1)
+            return BatterySamplePoint(
+                id: sample.id,
+                timestamp: sample.timestamp,
+                batteryLevel: min(100, max(0, level)),
+                powerSource: sample.powerSource,
+                chargingState: sample.chargingState,
+                systemEstimate: sample.systemEstimate,
+                lowPowerModeEnabled: sample.lowPowerModeEnabled,
+                displayActive: sample.displayActive,
+                systemSleeping: sample.systemSleeping,
+                sessionID: sample.sessionID
+            )
+        }
+    }
+
     private var lineSegments: [BatteryLineSegment] {
-        BatteryLineSegment.makeSegments(from: displaySamples)
+        BatteryLineSegment.makeSegments(from: graphSamples)
     }
 
     var body: some View {
@@ -50,7 +77,7 @@ struct BatteryTimelineChart: View {
                         yEnd: .value("Battery", sample.batteryLevel),
                         series: .value("Area segment", segment.id)
                     )
-                    .interpolationMethod(.monotone)
+                    .interpolationMethod(.catmullRom)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [segment.color.opacity(0.22), segment.color.opacity(0.015)],
@@ -64,7 +91,7 @@ struct BatteryTimelineChart: View {
                         y: .value("Battery", sample.batteryLevel),
                         series: .value("Line segment", segment.id)
                     )
-                    .interpolationMethod(.monotone)
+                    .interpolationMethod(.catmullRom)
                     .foregroundStyle(segment.color)
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                 }
