@@ -4,6 +4,7 @@ import SwiftUI
 struct AppShellView: View {
     enum Destination: String, CaseIterable, Hashable, Identifiable {
         case overview = "Overview"
+        case power = "Power"
         case history = "History"
         case insights = "Insights"
 
@@ -12,6 +13,7 @@ struct AppShellView: View {
         var symbol: String {
             switch self {
             case .overview: "waveform.path.ecg"
+            case .power: "bolt.horizontal.circle"
             case .history: "clock.arrow.trianglehead.counterclockwise.rotate.90"
             case .insights: "sparkles"
             }
@@ -50,6 +52,8 @@ struct AppShellView: View {
                 switch selection ?? .overview {
                 case .overview:
                     DashboardView()
+                case .power:
+                    PowerView()
                 case .history:
                     HistoryView()
                 case .insights:

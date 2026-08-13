@@ -15,6 +15,20 @@ final class BatterySampleRecord {
     var displayActive: Bool
     var systemSleeping: Bool
     var sessionID: UUID
+    var voltageVolts: Double?
+    var amperageAmps: Double?
+    var batteryPowerWatts: Double?
+    var adapterPowerWatts: Double?
+    var systemPowerWatts: Double?
+    var temperatureCelsius: Double?
+    var currentCapacityMilliampHours: Double?
+    var fullChargeCapacityMilliampHours: Double?
+    var designCapacityMilliampHours: Double?
+    var cycleCount: Int?
+    var batteryCondition: String?
+    var adapterCapacityWatts: Double?
+    var adapterIdentity: String?
+    var connectionTypeRaw: String?
 
     init(snapshot: BatterySnapshot, sessionID: UUID) {
         id = UUID()
@@ -30,6 +44,20 @@ final class BatterySampleRecord {
         displayActive = snapshot.displayActive
         systemSleeping = snapshot.systemSleeping
         self.sessionID = sessionID
+        voltageVolts = snapshot.electrical.voltageVolts
+        amperageAmps = snapshot.electrical.amperageAmps
+        batteryPowerWatts = snapshot.electrical.batteryPowerWatts
+        adapterPowerWatts = snapshot.electrical.adapterPowerWatts
+        systemPowerWatts = snapshot.electrical.systemPowerWatts
+        temperatureCelsius = snapshot.electrical.temperatureCelsius
+        currentCapacityMilliampHours = snapshot.electrical.currentCapacityMilliampHours
+        fullChargeCapacityMilliampHours = snapshot.electrical.fullChargeCapacityMilliampHours
+        designCapacityMilliampHours = snapshot.electrical.designCapacityMilliampHours
+        cycleCount = snapshot.electrical.cycleCount
+        batteryCondition = snapshot.electrical.condition
+        adapterCapacityWatts = snapshot.electrical.adapterCapacityWatts
+        adapterIdentity = snapshot.electrical.adapterIdentity
+        connectionTypeRaw = snapshot.electrical.connectionType?.rawValue
     }
 
     init(copying record: BatterySampleRecord) {
@@ -45,6 +73,20 @@ final class BatterySampleRecord {
         displayActive = record.displayActive
         systemSleeping = record.systemSleeping
         sessionID = record.sessionID
+        voltageVolts = record.voltageVolts
+        amperageAmps = record.amperageAmps
+        batteryPowerWatts = record.batteryPowerWatts
+        adapterPowerWatts = record.adapterPowerWatts
+        systemPowerWatts = record.systemPowerWatts
+        temperatureCelsius = record.temperatureCelsius
+        currentCapacityMilliampHours = record.currentCapacityMilliampHours
+        fullChargeCapacityMilliampHours = record.fullChargeCapacityMilliampHours
+        designCapacityMilliampHours = record.designCapacityMilliampHours
+        cycleCount = record.cycleCount
+        batteryCondition = record.batteryCondition
+        adapterCapacityWatts = record.adapterCapacityWatts
+        adapterIdentity = record.adapterIdentity
+        connectionTypeRaw = record.connectionTypeRaw
     }
 
     var point: BatterySamplePoint {
@@ -58,7 +100,23 @@ final class BatterySampleRecord {
             lowPowerModeEnabled: lowPowerModeEnabled,
             displayActive: displayActive,
             systemSleeping: systemSleeping,
-            sessionID: sessionID
+            sessionID: sessionID,
+            electrical: BatteryElectricalTelemetry(
+                voltageVolts: voltageVolts,
+                amperageAmps: amperageAmps,
+                batteryPowerWatts: batteryPowerWatts,
+                adapterPowerWatts: adapterPowerWatts,
+                systemPowerWatts: systemPowerWatts,
+                temperatureCelsius: temperatureCelsius,
+                currentCapacityMilliampHours: currentCapacityMilliampHours,
+                fullChargeCapacityMilliampHours: fullChargeCapacityMilliampHours,
+                designCapacityMilliampHours: designCapacityMilliampHours,
+                cycleCount: cycleCount,
+                condition: batteryCondition,
+                adapterCapacityWatts: adapterCapacityWatts,
+                adapterIdentity: adapterIdentity,
+                connectionType: connectionTypeRaw.flatMap(PowerConnectionType.init(rawValue:))
+            )
         )
     }
 

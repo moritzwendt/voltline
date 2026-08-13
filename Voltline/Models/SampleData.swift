@@ -45,7 +45,8 @@ enum SampleData {
                 lowPowerModeEnabled: minute >= 510,
                 displayActive: !breakPeriod,
                 systemSleeping: false,
-                sessionID: session
+                sessionID: session,
+                electrical: telemetry(source: source, state: state, minute: minute, level: level)
             ))
         }
         return points
@@ -62,7 +63,45 @@ enum SampleData {
             lowPowerModeEnabled: false,
             displayActive: true,
             systemSleeping: false,
-            warningState: .unavailable
+            warningState: .unavailable,
+            electrical: BatteryElectricalTelemetry(
+                voltageVolts: 11.62,
+                amperageAmps: -1.74,
+                batteryPowerWatts: 20.22,
+                adapterPowerWatts: nil,
+                systemPowerWatts: 20.22,
+                temperatureCelsius: 31.4,
+                currentCapacityMilliampHours: 3_980,
+                fullChargeCapacityMilliampHours: 8_240,
+                designCapacityMilliampHours: 8_579,
+                cycleCount: 48,
+                condition: "Normal",
+                adapterCapacityWatts: nil,
+                adapterIdentity: nil,
+                connectionType: nil
+            )
+        )
+    }
+
+    private static func telemetry(source: PowerSource, state: ChargingState, minute: Int, level: Double) -> BatteryElectricalTelemetry {
+        let voltage = 11.4 + level / 100 * 1.3
+        let magnitude = 9.5 + Double(minute % 55) / 8
+        let batteryPower = state == .charging ? 0 - magnitude : magnitude
+        return BatteryElectricalTelemetry(
+            voltageVolts: voltage,
+            amperageAmps: batteryPower / voltage,
+            batteryPowerWatts: batteryPower,
+            adapterPowerWatts: source == .external ? 35 : nil,
+            systemPowerWatts: source == .external ? 20 : magnitude,
+            temperatureCelsius: 29 + Double(minute % 90) / 18,
+            currentCapacityMilliampHours: 8_240 * level / 100,
+            fullChargeCapacityMilliampHours: 8_240,
+            designCapacityMilliampHours: 8_579,
+            cycleCount: 48,
+            condition: "Normal",
+            adapterCapacityWatts: source == .external ? 35 : nil,
+            adapterIdentity: source == .external ? "35W USB C Power Adapter" : nil,
+            connectionType: source == .external ? .usbC : nil
         )
     }
 

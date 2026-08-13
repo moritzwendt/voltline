@@ -188,9 +188,26 @@ struct SettingsView: View {
 
                 settingsSection("Data sources", symbol: "checkmark.shield") {
                     LabeledContent("Battery and power", value: "IOPowerSources")
+                    LabeledContent("Electrical details", value: "IORegistry")
                     LabeledContent("Low Power Mode", value: "Foundation")
                     LabeledContent("Display and sleep", value: "macOS events")
                     LabeledContent("Screen Time and app attribution", value: "Unavailable")
+                }
+
+                settingsSection("Live diagnostics", symbol: "stethoscope") {
+                    diagnostic("Battery power", value: watts(model.currentSnapshot?.electrical.batteryPowerWatts))
+                    diagnostic("System power", value: watts(model.currentSnapshot?.electrical.systemPowerWatts))
+                    diagnostic("Adapter power", value: watts(model.currentSnapshot?.electrical.adapterPowerWatts))
+                    diagnostic("Voltage", value: volts(model.currentSnapshot?.electrical.voltageVolts))
+                    diagnostic("Current", value: amps(model.currentSnapshot?.electrical.amperageAmps))
+                    diagnostic("Temperature", value: temperature(model.currentSnapshot?.electrical.temperatureCelsius))
+                    diagnostic("Full charge capacity", value: capacity(model.currentSnapshot?.electrical.fullChargeCapacityMilliampHours))
+                    diagnostic("Design capacity", value: capacity(model.currentSnapshot?.electrical.designCapacityMilliampHours))
+                    diagnostic("Cycle count", value: model.currentSnapshot?.electrical.cycleCount.map { $0.formatted() } ?? "Unavailable")
+                    diagnostic("Condition", value: model.currentSnapshot?.electrical.condition ?? "Unavailable")
+                    diagnostic("Adapter", value: model.currentSnapshot?.electrical.adapterIdentity ?? "Unavailable")
+                    diagnostic("Adapter capacity", value: watts(model.currentSnapshot?.electrical.adapterCapacityWatts))
+                    diagnostic("Connection", value: connection(model.currentSnapshot?.electrical.connectionType))
                 }
 
                 if let displayedError = serviceError ?? model.lastError {
@@ -214,6 +231,43 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This permanently removes every measurement and session stored by Voltline.")
+        }
+    }
+
+    private func diagnostic(_ title: String, value: String) -> some View {
+        LabeledContent(title) {
+            Text(value)
+                .monospacedDigit()
+        }
+    }
+
+    private func watts(_ value: Double?) -> String {
+        value.map { String(format: "%.1f W", $0) } ?? "Unavailable"
+    }
+
+    private func volts(_ value: Double?) -> String {
+        value.map { String(format: "%.2f V", $0) } ?? "Unavailable"
+    }
+
+    private func amps(_ value: Double?) -> String {
+        value.map { String(format: "%.2f A", $0) } ?? "Unavailable"
+    }
+
+    private func temperature(_ value: Double?) -> String {
+        value.map { String(format: "%.1f °C", $0) } ?? "Unavailable"
+    }
+
+    private func capacity(_ value: Double?) -> String {
+        value.map { "\(Int($0.rounded()).formatted()) mAh" } ?? "Unavailable"
+    }
+
+    private func connection(_ value: PowerConnectionType?) -> String {
+        switch value {
+        case .usbC: "USB C"
+        case .magsafe: "MagSafe"
+        case .wireless: "Wireless"
+        case .other: "Other"
+        case nil: "Unavailable"
         }
     }
 

@@ -195,7 +195,8 @@ final class AppModel {
                     lowPowerModeEnabled: last.lowPowerModeEnabled,
                     displayActive: last.displayActive,
                     systemSleeping: last.systemSleeping,
-                    warningState: .unavailable
+                    warningState: .unavailable,
+                    electrical: last.electrical
                 )
                 lastUpdated = last.timestamp
             }
@@ -249,7 +250,8 @@ final class AppModel {
                     lowPowerModeEnabled: snapshot.lowPowerModeEnabled,
                     displayActive: false,
                     systemSleeping: snapshot.systemSleeping,
-                    warningState: snapshot.warningState
+                    warningState: snapshot.warningState,
+                    electrical: snapshot.electrical
                 )
             }
             let previous = currentSnapshot
@@ -380,6 +382,24 @@ final class AppModel {
         recordedDays.first?.date
     }
 
+    func powerSamples(from start: Date, through end: Date) -> [BatterySamplePoint] {
+        if demoMode {
+            return PowerAnalytics.samples(samples, from: start, through: end)
+        }
+        let descriptor = FetchDescriptor<BatterySampleRecord>(
+            predicate: #Predicate { record in
+                record.timestamp >= start && record.timestamp <= end
+            },
+            sortBy: [SortDescriptor(\.timestamp)]
+        )
+        do {
+            return try context.fetch(descriptor).map(\.point)
+        } catch {
+            lastError = "Power history could not be loaded."
+            return []
+        }
+    }
+
     func selectLatestRecordedDay() {
         guard let latestRecordedDate else {
             return
@@ -435,7 +455,7 @@ final class AppModel {
             return
         }
         let formatter = ISO8601DateFormatter()
-        var rows = ["timestamp,battery_percentage,is_charging,power_source,low_power_mode,display_active,system_estimated_seconds"]
+        var rows = ["timestamp,battery_percentage,is_charging,power_source,low_power_mode,display_active,system_estimated_seconds,voltage_volts,amperage_amps,battery_power_watts,adapter_power_watts,system_power_watts,temperature_celsius,current_capacity_mah,full_charge_capacity_mah,design_capacity_mah,cycle_count,battery_condition,adapter_capacity_watts,adapter_identity,connection_type"]
         rows.append(contentsOf: records.map { record in
             let charging = record.chargingStateRaw == ChargingState.charging.rawValue
             return [
@@ -445,7 +465,21 @@ final class AppModel {
                 record.powerSourceRaw,
                 String(record.lowPowerModeEnabled),
                 String(record.displayActive),
-                record.estimateSeconds.map { String($0) } ?? ""
+                record.estimateSeconds.map { String($0) } ?? "",
+                Self.csvNumber(record.voltageVolts),
+                Self.csvNumber(record.amperageAmps),
+                Self.csvNumber(record.batteryPowerWatts),
+                Self.csvNumber(record.adapterPowerWatts),
+                Self.csvNumber(record.systemPowerWatts),
+                Self.csvNumber(record.temperatureCelsius),
+                Self.csvNumber(record.currentCapacityMilliampHours),
+                Self.csvNumber(record.fullChargeCapacityMilliampHours),
+                Self.csvNumber(record.designCapacityMilliampHours),
+                record.cycleCount.map(String.init) ?? "",
+                Self.csvText(record.batteryCondition),
+                Self.csvNumber(record.adapterCapacityWatts),
+                Self.csvText(record.adapterIdentity),
+                record.connectionTypeRaw ?? ""
             ].joined(separator: ",")
         })
         let panel = NSSavePanel()
@@ -459,6 +493,17 @@ final class AppModel {
         } catch {
             lastError = "The export could not be saved."
         }
+    }
+
+    private static func csvNumber(_ value: Double?) -> String {
+        value.map { String(format: "%.4f", locale: Locale(identifier: "en_US_POSIX"), $0) } ?? ""
+    }
+
+    private static func csvText(_ value: String?) -> String {
+        guard let value else {
+            return ""
+        }
+        return "\"\(value.replacingOccurrences(of: "\"", with: "\"\""))\""
     }
 
     func deleteAllHistory() {

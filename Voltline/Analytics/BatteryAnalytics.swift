@@ -7,6 +7,9 @@ struct BatteryDayMetrics: Sendable, Equatable {
     let averageDrainRate: Double?
     let chargingTime: TimeInterval
     let sessionCount: Int
+    let energyConsumedWattHours: Double?
+    let averageSystemPowerWatts: Double?
+    let peakTemperatureCelsius: Double?
 }
 
 enum BatteryAnalytics {
@@ -72,6 +75,9 @@ enum BatteryAnalytics {
         var batteryTime: TimeInterval = 0
         var activeTime: TimeInterval = 0
         var chargingTime: TimeInterval = 0
+        var energyConsumed = 0.0
+        var measuredPowerTime: TimeInterval = 0
+        var measuredPowerEnergy = 0.0
         var sessions = Set<UUID>()
 
         for pair in zip(ordered, ordered.dropFirst()) {
@@ -95,6 +101,14 @@ enum BatteryAnalytics {
             if previous.isCharging {
                 chargingTime += interval
             }
+            if let watts = previous.electrical.systemPowerWatts {
+                let wattHours = watts * interval / 3600
+                measuredPowerEnergy += wattHours
+                measuredPowerTime += interval
+                if previous.powerSource == .battery {
+                    energyConsumed += wattHours
+                }
+            }
         }
 
         let average = batteryTime > 0 ? 0 - used / (batteryTime / 3600) : nil
@@ -104,7 +118,10 @@ enum BatteryAnalytics {
             activeTime: activeTime,
             averageDrainRate: average,
             chargingTime: chargingTime,
-            sessionCount: sessions.count
+            sessionCount: sessions.count,
+            energyConsumedWattHours: measuredPowerTime > 0 ? energyConsumed : nil,
+            averageSystemPowerWatts: measuredPowerTime > 0 ? measuredPowerEnergy / (measuredPowerTime / 3600) : nil,
+            peakTemperatureCelsius: ordered.compactMap(\.electrical.temperatureCelsius).max()
         )
     }
 }
