@@ -29,6 +29,8 @@ final class BatterySampleRecord {
     var adapterCapacityWatts: Double?
     var adapterIdentity: String?
     var connectionTypeRaw: String?
+    var hardwarePercentage: Double?
+    var manufactureDate: Date?
 
     init(snapshot: BatterySnapshot, sessionID: UUID) {
         id = UUID()
@@ -58,6 +60,8 @@ final class BatterySampleRecord {
         adapterCapacityWatts = snapshot.electrical.adapterCapacityWatts
         adapterIdentity = snapshot.electrical.adapterIdentity
         connectionTypeRaw = snapshot.electrical.connectionType?.rawValue
+        hardwarePercentage = snapshot.electrical.hardwarePercentage
+        manufactureDate = snapshot.electrical.manufactureDate
     }
 
     init(copying record: BatterySampleRecord) {
@@ -87,6 +91,8 @@ final class BatterySampleRecord {
         adapterCapacityWatts = record.adapterCapacityWatts
         adapterIdentity = record.adapterIdentity
         connectionTypeRaw = record.connectionTypeRaw
+        hardwarePercentage = record.hardwarePercentage
+        manufactureDate = record.manufactureDate
     }
 
     var point: BatterySamplePoint {
@@ -115,7 +121,9 @@ final class BatterySampleRecord {
                 condition: batteryCondition,
                 adapterCapacityWatts: adapterCapacityWatts,
                 adapterIdentity: adapterIdentity,
-                connectionType: connectionTypeRaw.flatMap(PowerConnectionType.init(rawValue:))
+                connectionType: connectionTypeRaw.flatMap(PowerConnectionType.init(rawValue:)),
+                hardwarePercentage: hardwarePercentage,
+                manufactureDate: manufactureDate
             )
         )
     }
@@ -136,6 +144,109 @@ final class BatterySampleRecord {
         case "unlimited": .unlimited
         default: .unavailable
         }
+    }
+}
+
+struct DailyHealthSnapshotPoint: Identifiable, Sendable, Equatable {
+    let id: UUID
+    let day: Date
+    let capturedAt: Date
+    let fullChargeCapacityMilliampHours: Double?
+    let designCapacityMilliampHours: Double?
+    let healthPercentage: Double?
+    let cycleCount: Int?
+    let temperatureCelsius: Double?
+    let hardwarePercentage: Double?
+    let condition: String?
+    let manufactureDate: Date?
+}
+
+@Model
+final class DailyHealthSnapshotRecord {
+    @Attribute(.unique) var id: UUID
+    @Attribute(.unique) var day: Date
+    var capturedAt: Date
+    var fullChargeCapacityMilliampHours: Double?
+    var designCapacityMilliampHours: Double?
+    var healthPercentage: Double?
+    var cycleCount: Int?
+    var temperatureCelsius: Double?
+    var hardwarePercentage: Double?
+    var condition: String?
+    var manufactureDate: Date?
+
+    init(day: Date, snapshot: BatterySnapshot) {
+        id = UUID()
+        self.day = day
+        capturedAt = snapshot.timestamp
+        apply(snapshot)
+    }
+
+    init(day: Date, sample: BatterySamplePoint) {
+        id = UUID()
+        self.day = day
+        capturedAt = sample.timestamp
+        apply(sample)
+    }
+
+    init(copying record: DailyHealthSnapshotRecord) {
+        id = record.id
+        day = record.day
+        capturedAt = record.capturedAt
+        fullChargeCapacityMilliampHours = record.fullChargeCapacityMilliampHours
+        designCapacityMilliampHours = record.designCapacityMilliampHours
+        healthPercentage = record.healthPercentage
+        cycleCount = record.cycleCount
+        temperatureCelsius = record.temperatureCelsius
+        hardwarePercentage = record.hardwarePercentage
+        condition = record.condition
+        manufactureDate = record.manufactureDate
+    }
+
+    func apply(_ snapshot: BatterySnapshot) {
+        capturedAt = snapshot.timestamp
+        fullChargeCapacityMilliampHours = snapshot.electrical.fullChargeCapacityMilliampHours
+        designCapacityMilliampHours = snapshot.electrical.designCapacityMilliampHours
+        healthPercentage = HealthAnalytics.healthPercentage(
+            fullChargeCapacity: snapshot.electrical.fullChargeCapacityMilliampHours,
+            designCapacity: snapshot.electrical.designCapacityMilliampHours
+        )
+        cycleCount = snapshot.electrical.cycleCount
+        temperatureCelsius = snapshot.electrical.temperatureCelsius
+        hardwarePercentage = snapshot.electrical.hardwarePercentage
+        condition = snapshot.electrical.condition
+        manufactureDate = snapshot.electrical.manufactureDate
+    }
+
+    func apply(_ sample: BatterySamplePoint) {
+        capturedAt = sample.timestamp
+        fullChargeCapacityMilliampHours = sample.electrical.fullChargeCapacityMilliampHours
+        designCapacityMilliampHours = sample.electrical.designCapacityMilliampHours
+        healthPercentage = HealthAnalytics.healthPercentage(
+            fullChargeCapacity: sample.electrical.fullChargeCapacityMilliampHours,
+            designCapacity: sample.electrical.designCapacityMilliampHours
+        )
+        cycleCount = sample.electrical.cycleCount
+        temperatureCelsius = sample.electrical.temperatureCelsius
+        hardwarePercentage = sample.electrical.hardwarePercentage
+        condition = sample.electrical.condition
+        manufactureDate = sample.electrical.manufactureDate
+    }
+
+    var point: DailyHealthSnapshotPoint {
+        DailyHealthSnapshotPoint(
+            id: id,
+            day: day,
+            capturedAt: capturedAt,
+            fullChargeCapacityMilliampHours: fullChargeCapacityMilliampHours,
+            designCapacityMilliampHours: designCapacityMilliampHours,
+            healthPercentage: healthPercentage,
+            cycleCount: cycleCount,
+            temperatureCelsius: temperatureCelsius,
+            hardwarePercentage: hardwarePercentage,
+            condition: condition,
+            manufactureDate: manufactureDate
+        )
     }
 }
 

@@ -156,7 +156,14 @@ struct BatteryHardwareService: Sendable {
             condition: condition,
             adapterCapacityWatts: activeAdapter.flatMap { number($0, key: "Watts") },
             adapterIdentity: activeAdapter.flatMap(adapterIdentity),
-            connectionType: activeAdapter.flatMap(connectionType)
+            connectionType: activeAdapter.flatMap(connectionType),
+            hardwarePercentage: firstNumber(
+                (packBatteryData, "StateOfCharge"),
+                (rootBatteryData, "StateOfCharge")
+            ).flatMap { (0...100).contains($0) ? $0 : nil },
+            manufactureDate: manufactureDate(
+                from: packBatteryData["ManufactureDate"] ?? batteryProperties["ManufactureDate"]
+            )
         )
     }
 
@@ -173,6 +180,31 @@ struct BatteryHardwareService: Sendable {
         }
         let value = rawValue >= 2_000 ? rawValue / 100 : rawValue
         return (-40...125).contains(value) ? value : nil
+    }
+
+    static func manufactureDate(from value: Any?, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date? {
+        if let string = value as? String {
+            let formatter = DateFormatter()
+            formatter.calendar = calendar
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.date(from: string)
+        }
+        guard let number = value as? NSNumber else {
+            return nil
+        }
+        let raw = number.uint64Value
+        guard raw <= UInt16.max else {
+            return nil
+        }
+        let encoded = UInt16(raw)
+        let day = Int(encoded & 0x1F)
+        let month = Int((encoded >> 5) & 0x0F)
+        let year = Int((encoded >> 9) & 0x7F) + 1980
+        guard year >= 1980, month >= 1, month <= 12, day >= 1, day <= 31 else {
+            return nil
+        }
+        return calendar.date(from: DateComponents(year: year, month: month, day: day))
     }
 
     private func registryProperties(className: String) -> [String: Any] {

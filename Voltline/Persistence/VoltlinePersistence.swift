@@ -6,7 +6,8 @@ enum VoltlinePersistence {
         Schema([
             BatterySampleRecord.self,
             PowerSessionRecord.self,
-            DailySummaryRecord.self
+            DailySummaryRecord.self,
+            DailyHealthSnapshotRecord.self
         ])
     }
 

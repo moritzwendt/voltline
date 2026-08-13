@@ -78,7 +78,9 @@ enum SampleData {
                 condition: "Normal",
                 adapterCapacityWatts: nil,
                 adapterIdentity: nil,
-                connectionType: nil
+                connectionType: nil,
+                hardwarePercentage: 46,
+                manufactureDate: Calendar.current.date(from: DateComponents(year: 2024, month: 2, day: 12))
             )
         )
     }
@@ -101,8 +103,39 @@ enum SampleData {
             condition: "Normal",
             adapterCapacityWatts: source == .external ? 35 : nil,
             adapterIdentity: source == .external ? "35W USB C Power Adapter" : nil,
-            connectionType: source == .external ? .usbC : nil
+            connectionType: source == .external ? .usbC : nil,
+            hardwarePercentage: max(0, level - 1),
+            manufactureDate: calendarDate(year: 2024, month: 2, day: 12)
         )
+    }
+
+    static func healthHistory(referenceDate: Date, calendar: Calendar = .current) -> [DailyHealthSnapshotPoint] {
+        let end = calendar.startOfDay(for: referenceDate)
+        return (0...400).compactMap { offset in
+            guard let day = calendar.date(byAdding: .day, value: offset - 400, to: end) else {
+                return nil
+            }
+            let progress = Double(offset)
+            let fullCapacity = 8_460 - progress * 0.55 + sin(progress / 17) * 9
+            let designCapacity = 8_579.0
+            return DailyHealthSnapshotPoint(
+                id: UUID(),
+                day: day,
+                capturedAt: day.addingTimeInterval(12 * 60 * 60),
+                fullChargeCapacityMilliampHours: fullCapacity,
+                designCapacityMilliampHours: designCapacity,
+                healthPercentage: fullCapacity / designCapacity * 100,
+                cycleCount: 20 + Int(progress * 0.07),
+                temperatureCelsius: 30 + sin(progress / 11) * 3.2,
+                hardwarePercentage: 46,
+                condition: "Normal",
+                manufactureDate: calendarDate(year: 2024, month: 2, day: 12)
+            )
+        }
+    }
+
+    private static func calendarDate(year: Int, month: Int, day: Int) -> Date? {
+        Calendar.current.date(from: DateComponents(year: year, month: month, day: day))
     }
 
     static var accessories: [BatteryDevice] {

@@ -5,6 +5,7 @@ struct AppShellView: View {
     enum Destination: String, CaseIterable, Hashable, Identifiable {
         case overview = "Overview"
         case power = "Power"
+        case health = "Health"
         case history = "History"
         case insights = "Insights"
 
@@ -14,6 +15,7 @@ struct AppShellView: View {
             switch self {
             case .overview: "waveform.path.ecg"
             case .power: "bolt.horizontal.circle"
+            case .health: "heart.text.clipboard"
             case .history: "clock.arrow.trianglehead.counterclockwise.rotate.90"
             case .insights: "sparkles"
             }
@@ -54,6 +56,8 @@ struct AppShellView: View {
                     DashboardView()
                 case .power:
                     PowerView()
+                case .health:
+                    HealthView()
                 case .history:
                     HistoryView()
                 case .insights:

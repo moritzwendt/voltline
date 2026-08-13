@@ -66,6 +66,44 @@ struct BatteryElectricalTelemetry: Sendable, Equatable {
     let adapterCapacityWatts: Double?
     let adapterIdentity: String?
     let connectionType: PowerConnectionType?
+    let hardwarePercentage: Double?
+    let manufactureDate: Date?
+
+    init(
+        voltageVolts: Double?,
+        amperageAmps: Double?,
+        batteryPowerWatts: Double?,
+        adapterPowerWatts: Double?,
+        systemPowerWatts: Double?,
+        temperatureCelsius: Double?,
+        currentCapacityMilliampHours: Double?,
+        fullChargeCapacityMilliampHours: Double?,
+        designCapacityMilliampHours: Double?,
+        cycleCount: Int?,
+        condition: String?,
+        adapterCapacityWatts: Double?,
+        adapterIdentity: String?,
+        connectionType: PowerConnectionType?,
+        hardwarePercentage: Double? = nil,
+        manufactureDate: Date? = nil
+    ) {
+        self.voltageVolts = voltageVolts
+        self.amperageAmps = amperageAmps
+        self.batteryPowerWatts = batteryPowerWatts
+        self.adapterPowerWatts = adapterPowerWatts
+        self.systemPowerWatts = systemPowerWatts
+        self.temperatureCelsius = temperatureCelsius
+        self.currentCapacityMilliampHours = currentCapacityMilliampHours
+        self.fullChargeCapacityMilliampHours = fullChargeCapacityMilliampHours
+        self.designCapacityMilliampHours = designCapacityMilliampHours
+        self.cycleCount = cycleCount
+        self.condition = condition
+        self.adapterCapacityWatts = adapterCapacityWatts
+        self.adapterIdentity = adapterIdentity
+        self.connectionType = connectionType
+        self.hardwarePercentage = hardwarePercentage
+        self.manufactureDate = manufactureDate
+    }
 
     var batteryPowerDirection: BatteryPowerDirection? {
         guard let batteryPowerWatts else {
@@ -94,7 +132,9 @@ struct BatteryElectricalTelemetry: Sendable, Equatable {
         condition: nil,
         adapterCapacityWatts: nil,
         adapterIdentity: nil,
-        connectionType: nil
+        connectionType: nil,
+        hardwarePercentage: nil,
+        manufactureDate: nil
     )
 }
 

@@ -214,6 +214,7 @@ final class AppModel {
             self?.refreshAccessories()
         }
         if !demoMode {
+            backfillDailyHealth()
             refresh(persist: monitoringEnabled)
             loadSamples(for: selectedDate)
             loadRecordedDays()
@@ -400,6 +401,25 @@ final class AppModel {
         }
     }
 
+    func healthSnapshots(from start: Date, through end: Date) -> [DailyHealthSnapshotPoint] {
+        if demoMode {
+            return SampleData.healthHistory(referenceDate: currentSnapshot?.timestamp ?? .now)
+                .filter { $0.day >= start && $0.day <= end }
+        }
+        let descriptor = FetchDescriptor<DailyHealthSnapshotRecord>(
+            predicate: #Predicate { record in
+                record.day >= start && record.day <= end
+            },
+            sortBy: [SortDescriptor(\.day)]
+        )
+        do {
+            return try context.fetch(descriptor).map(\.point)
+        } catch {
+            lastError = "Health history could not be loaded."
+            return []
+        }
+    }
+
     func selectLatestRecordedDay() {
         guard let latestRecordedDate else {
             return
@@ -511,6 +531,7 @@ final class AppModel {
             try context.delete(model: BatterySampleRecord.self)
             try context.delete(model: PowerSessionRecord.self)
             try context.delete(model: DailySummaryRecord.self)
+            try context.delete(model: DailyHealthSnapshotRecord.self)
             try context.save()
             samples = []
             recordedDays = []
@@ -701,6 +722,7 @@ final class AppModel {
         }
 
         context.insert(BatterySampleRecord(snapshot: snapshot, sessionID: currentSessionID))
+        persistDailyHealth(snapshot)
         do {
             try context.save()
             if Calendar.current.isDate(snapshot.timestamp, inSameDayAs: selectedDate) {
@@ -709,6 +731,42 @@ final class AppModel {
             loadRecordedDays()
         } catch {
             lastError = "The latest measurement could not be saved."
+        }
+    }
+
+    private func persistDailyHealth(_ snapshot: BatterySnapshot) {
+        let day = Calendar.current.startOfDay(for: snapshot.timestamp)
+        let descriptor = FetchDescriptor<DailyHealthSnapshotRecord>(
+            predicate: #Predicate { record in
+                record.day == day
+            }
+        )
+        if let record = try? context.fetch(descriptor).first {
+            record.apply(snapshot)
+        } else {
+            context.insert(DailyHealthSnapshotRecord(day: day, snapshot: snapshot))
+        }
+    }
+
+    private func backfillDailyHealth() {
+        do {
+            let existing = try context.fetch(FetchDescriptor<DailyHealthSnapshotRecord>())
+            var existingDays = Set(existing.map(\.day))
+            let records = try context.fetch(FetchDescriptor<BatterySampleRecord>(sortBy: [SortDescriptor(\.timestamp)]))
+            let representatives = HealthAnalytics.dailyRepresentatives(samples: records.map(\.point))
+            for sample in representatives {
+                let day = Calendar.current.startOfDay(for: sample.timestamp)
+                guard !existingDays.contains(day) else {
+                    continue
+                }
+                context.insert(DailyHealthSnapshotRecord(day: day, sample: sample))
+                existingDays.insert(day)
+            }
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            lastError = "Health history could not be prepared."
         }
     }
 

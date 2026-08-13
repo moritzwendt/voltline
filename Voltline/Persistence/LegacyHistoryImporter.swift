@@ -5,6 +5,7 @@ struct HistoryImportResult: Equatable {
     let measurements: Int
     let sessions: Int
     let summaries: Int
+    let healthSnapshots: Int
 }
 
 @MainActor
@@ -61,11 +62,22 @@ enum LegacyHistoryImporter {
             importedSummaries += 1
         }
 
+        let existingHealth = try destination.fetch(FetchDescriptor<DailyHealthSnapshotRecord>())
+        var healthDays = Set(existingHealth.map(\.day))
+        var importedHealth = 0
+
+        for record in try source.fetch(FetchDescriptor<DailyHealthSnapshotRecord>()) where !healthDays.contains(record.day) {
+            destination.insert(DailyHealthSnapshotRecord(copying: record))
+            healthDays.insert(record.day)
+            importedHealth += 1
+        }
+
         try destination.save()
         return HistoryImportResult(
             measurements: importedMeasurements,
             sessions: importedSessions,
-            summaries: importedSummaries
+            summaries: importedSummaries,
+            healthSnapshots: importedHealth
         )
     }
 
