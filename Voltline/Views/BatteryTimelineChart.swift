@@ -4,9 +4,14 @@ import SwiftUI
 struct BatteryTimelineChart: View {
     let samples: [BatterySamplePoint]
     @State private var inspectedSample: BatterySamplePoint?
+    @State private var inspectorOnTrailingEdge = false
 
     private var displaySamples: [BatterySamplePoint] {
         BatteryAnalytics.downsample(samples: samples, maxPoints: 720)
+    }
+
+    private var lineSegments: [BatteryLineSegment] {
+        BatteryLineSegment.makeSegments(from: displaySamples)
     }
 
     var body: some View {
@@ -17,13 +22,16 @@ struct BatteryTimelineChart: View {
             )
         } else {
             VStack(spacing: 16) {
-                ZStack(alignment: .topTrailing) {
+                ZStack(alignment: inspectorOnTrailingEdge ? .topTrailing : .topLeading) {
                     chart
                     if let inspectedSample {
                         ChartInspector(sample: inspectedSample)
                             .padding(.top, 8)
-                            .padding(.trailing, 8)
-                            .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .topTrailing)))
+                            .padding(.horizontal, 8)
+                            .transition(.opacity.combined(with: .scale(
+                                scale: 0.96,
+                                anchor: inspectorOnTrailingEdge ? .topTrailing : .topLeading
+                            )))
                     }
                 }
                 ActivityRails(samples: displaySamples)
@@ -34,34 +42,31 @@ struct BatteryTimelineChart: View {
 
     private var chart: some View {
         Chart {
-            ForEach(displaySamples) { sample in
-                AreaMark(
-                    x: .value("Time", sample.timestamp),
-                    yStart: .value("Base", 0),
-                    yEnd: .value("Battery", sample.batteryLevel)
-                )
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [VoltlineStyle.mint.opacity(0.22), VoltlineStyle.mint.opacity(0.015)],
-                        startPoint: .top,
-                        endPoint: .bottom
+            ForEach(lineSegments) { segment in
+                ForEach(segment.samples) { sample in
+                    AreaMark(
+                        x: .value("Time", sample.timestamp),
+                        yStart: .value("Base", 0),
+                        yEnd: .value("Battery", sample.batteryLevel),
+                        series: .value("Area segment", segment.id)
                     )
-                )
-
-                LineMark(
-                    x: .value("Time", sample.timestamp),
-                    y: .value("Battery", sample.batteryLevel)
-                )
-                .foregroundStyle(VoltlineStyle.mint)
-                .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-
-                if sample.isCharging {
-                    PointMark(
-                        x: .value("Charge time", sample.timestamp),
-                        y: .value("Charge level", sample.batteryLevel)
+                    .interpolationMethod(.monotone)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [segment.color.opacity(0.22), segment.color.opacity(0.015)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
                     )
-                    .foregroundStyle(VoltlineStyle.amber)
-                    .symbolSize(22)
+
+                    LineMark(
+                        x: .value("Time", sample.timestamp),
+                        y: .value("Battery", sample.batteryLevel),
+                        series: .value("Line segment", segment.id)
+                    )
+                    .interpolationMethod(.monotone)
+                    .foregroundStyle(segment.color)
+                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                 }
             }
 
@@ -113,6 +118,7 @@ struct BatteryTimelineChart: View {
                             inspect(location: location, proxy: proxy, geometry: geometry)
                         case .ended:
                             inspectedSample = nil
+                            inspectorOnTrailingEdge = false
                         }
                     }
             }
@@ -129,11 +135,59 @@ struct BatteryTimelineChart: View {
         let x = location.x - frame.origin.x
         guard x >= 0, x <= frame.width, let date = proxy.value(atX: x, as: Date.self) else {
             inspectedSample = nil
+            inspectorOnTrailingEdge = false
             return
         }
+        inspectorOnTrailingEdge = location.x <= 234
         inspectedSample = displaySamples.min { first, second in
             abs(first.timestamp.timeIntervalSince(date)) < abs(second.timestamp.timeIntervalSince(date))
         }
+    }
+}
+
+private struct BatteryLineSegment: Identifiable {
+    let id: String
+    let isCharging: Bool
+    let samples: [BatterySamplePoint]
+
+    var color: Color {
+        isCharging ? VoltlineStyle.amber : VoltlineStyle.mint
+    }
+
+    static func makeSegments(from samples: [BatterySamplePoint]) -> [BatteryLineSegment] {
+        guard let first = samples.first else {
+            return []
+        }
+
+        var segments: [BatteryLineSegment] = []
+        var currentSamples = [first]
+        var currentState = first.isCharging
+
+        for sample in samples.dropFirst() {
+            if sample.isCharging == currentState {
+                currentSamples.append(sample)
+                continue
+            }
+
+            if currentSamples.count > 1 {
+                segments.append(segment(samples: currentSamples, isCharging: currentState))
+            }
+            currentSamples = [currentSamples.last ?? sample, sample]
+            currentState = sample.isCharging
+        }
+
+        if currentSamples.count > 1 {
+            segments.append(segment(samples: currentSamples, isCharging: currentState))
+        }
+        return segments
+    }
+
+    private static func segment(samples: [BatterySamplePoint], isCharging: Bool) -> BatteryLineSegment {
+        BatteryLineSegment(
+            id: "\(samples.first?.id.uuidString ?? UUID().uuidString)|\(isCharging)",
+            isCharging: isCharging,
+            samples: samples
+        )
     }
 }
 
