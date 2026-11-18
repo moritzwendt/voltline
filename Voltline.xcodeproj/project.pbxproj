@@ -31,6 +31,7 @@
 		77429D836B5215C1B2E1C5E9 /* PowerAnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62012833B913C7707B2ABA74 /* PowerAnalyticsTests.swift */; };
 		7C5E31ED8E5AE682638F6B06 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F260F67FB9C1759F23596E0 /* AppModel.swift */; };
 		7D84925BECC0201CE27A223C /* VoltlineStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8F6A4A85A2E3F544476F /* VoltlineStyle.swift */; };
+		7FAC21E6A8691BF085BDFA64 /* RecordedDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F49BAECD8C9F95B4F12C534 /* RecordedDayTests.swift */; };
 		81656C1522DF91480814951B /* BluetoothConnectionBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5AFAE2D74F13A5DEF9F254 /* BluetoothConnectionBridge.swift */; };
 		880A7A8044EC93C933233DFE /* PowerHistoryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80B5348682114FFD5E77F6 /* PowerHistoryChart.swift */; };
 		889E89860ED6E682B404025C /* BatterySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C78AED19959C0CB42B995A /* BatterySnapshot.swift */; };
@@ -79,6 +80,7 @@
 		1E2ABAD465E6AE8D484E2E4B /* AppShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellView.swift; sourceTree = "<group>"; };
 		1F260F67FB9C1759F23596E0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		1F334125D3D99441000EA4C6 /* libimobiledevice-glue-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libimobiledevice-glue-1.0.0.dylib"; sourceTree = "<group>"; };
+		1F49BAECD8C9F95B4F12C534 /* RecordedDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedDayTests.swift; sourceTree = "<group>"; };
 		21FE1833AC3FF639C6623D6F /* BLEAccessoryScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEAccessoryScanner.swift; sourceTree = "<group>"; };
 		24FFB49D6BD9142113B1C4EC /* Voltline.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = Voltline.icon; sourceTree = "<group>"; };
 		25C9986E75030875CE318F6F /* BatteryDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryDevice.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				ECA6097FCD97B0095BB3B61D /* HealthAnalyticsTests.swift */,
 				7132116FFD562B323CC10C5B /* HistoryImportTests.swift */,
 				62012833B913C7707B2ABA74 /* PowerAnalyticsTests.swift */,
+				1F49BAECD8C9F95B4F12C534 /* RecordedDayTests.swift */,
 			);
 			path = VoltlineTests;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				8CE1CB36A85B5282381BCF08 /* HealthAnalyticsTests.swift in Sources */,
 				BB604F16743AF76F33DD03F9 /* HistoryImportTests.swift in Sources */,
 				77429D836B5215C1B2E1C5E9 /* PowerAnalyticsTests.swift in Sources */,
+				7FAC21E6A8691BF085BDFA64 /* RecordedDayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,18 @@ struct RecordedDay: Identifiable, Equatable {
     var id: Date {
         date
     }
+
+    static func recording(_ timestamp: Date, in days: [RecordedDay], calendar: Calendar = .current) -> [RecordedDay] {
+        let day = calendar.startOfDay(for: timestamp)
+        var result = days
+        if let index = result.firstIndex(where: { $0.date == day }) {
+            result[index] = RecordedDay(date: day, measurementCount: result[index].measurementCount + 1)
+        } else {
+            result.append(RecordedDay(date: day, measurementCount: 1))
+            result.sort { $0.date > $1.date }
+        }
+        return result
+    }
 }
 
 @MainActor
@@ -728,7 +740,7 @@ final class AppModel {
             if Calendar.current.isDate(snapshot.timestamp, inSameDayAs: selectedDate) {
                 loadSamples(for: selectedDate)
             }
-            loadRecordedDays()
+            recordedDays = RecordedDay.recording(snapshot.timestamp, in: recordedDays)
         } catch {
             lastError = "The latest measurement could not be saved."
         }
